@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="sianik_marketingCampaign" Class="MCampDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=.;Initial Catalog=sianik_marketingCampaign;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="sianik_marketingCampaignConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.CampaignCustomers" Member="CampaignCustomers">
+    <Type Name="CampaignCustomer">
+      <Column Name="CampaignId" Type="System.Int64" DbType="BigInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CustomerId" Type="System.Int64" DbType="BigInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Campaign_CampaignCustomer" Member="Campaign" ThisKey="CampaignId" OtherKey="Id" Type="Campaign" IsForeignKey="true" />
+      <Association Name="Customer_CampaignCustomer" Member="Customer" ThisKey="CustomerId" OtherKey="Id" Type="Customer" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Users" Member="Users">
+    <Type Name="User">
+      <Column Name="Id" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserId" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="Password" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="FName" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="LName" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="Mobile" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="Address" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Active" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Modified" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Deleted" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="User_Campaign" Member="Campaigns" ThisKey="Id" OtherKey="UserId" Type="Campaign" />
+      <Association Name="User_Log" Member="Logs" ThisKey="Id" OtherKey="UserId" Type="Log" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Campaigns" Member="Campaigns">
+    <Type Name="Campaign">
+      <Column Name="Id" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Type" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Messeage" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="CustomerCount" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="UserId" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Association Name="Campaign_CampaignCustomer" Member="CampaignCustomers" ThisKey="Id" OtherKey="CampaignId" Type="CampaignCustomer" />
+      <Association Name="User_Campaign" Member="User" ThisKey="UserId" OtherKey="Id" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Customers" Member="Customers">
+    <Type Name="Customer">
+      <Column Name="Id" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FName" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="LName" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="Mobile" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="Address" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Modified" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Deleted" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Customer_CampaignCustomer" Member="CampaignCustomers" ThisKey="Id" OtherKey="CustomerId" Type="CampaignCustomer" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Logs" Member="Logs">
+    <Type Name="Log">
+      <Column Name="LTime" Type="System.DateTime" DbType="DateTime NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Messeage" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Type" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="UserId" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Association Name="User_Log" Member="User" ThisKey="UserId" OtherKey="Id" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
